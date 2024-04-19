@@ -3,7 +3,7 @@ import { clerkClient } from '@clerk/nextjs/server';
 
 export default async function FullPageImageView(props: { id: string }) {
   const idAsNumber = Number(props.id);
-  if(Number.isNaN(idAsNumber)) throw new Error('Invalid photo ID');
+  if (Number.isNaN(idAsNumber)) throw new Error('Invalid photo ID');
 
   const image = await getImage(idAsNumber);
 

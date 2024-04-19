@@ -1,5 +1,7 @@
 import "~/styles/globals.css";
 
+import { Toaster } from '~/components/ui/sonner';
+
 import { ClerkProvider } from "@clerk/nextjs";
 
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
@@ -46,9 +48,10 @@ export default function RootLayout({
           <div className="grid h-screen grid-rows-[auto,1fr]">
             <TopNav />
             <main className="overflow-y-scroll">{children}</main>
-          {modal}
+            {modal}
           </div>
           <div id='modal-root' />
+          <Toaster />
         </body>
       </html>
     </ClerkProvider>
