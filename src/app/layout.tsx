@@ -14,6 +14,8 @@ import TopNav from "~/app/_components/topnav";
 import { Inter } from "next/font/google";
 import React from "react";
 
+import { CSPostHogProvider } from "./_analytics/provider";
+
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
@@ -34,26 +36,28 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider>
-      <NextSSRPlugin
-        /**
-         * The `extractRouterConfig` will extract **only** the route configs
-         * from the router to prevent additional information from being
-         * leaked to the client. The data passed to the client is the same
-         * as if you were to fetch `/api/uploadthing` directly.
-         */
-        routerConfig={extractRouterConfig(ourFileRouter)}
-      />
-      <html lang="en">
-        <body className={`font-sans ${inter.variable} dark`}>
-          <div className="grid h-screen grid-rows-[auto,1fr]">
-            <TopNav />
-            <main className="overflow-y-scroll">{children}</main>
-            {modal}
-          </div>
-          <div id='modal-root' />
-          <Toaster />
-        </body>
-      </html>
+      <CSPostHogProvider>
+        <NextSSRPlugin
+          /**
+           * The `extractRouterConfig` will extract **only** the route configs
+           * from the router to prevent additional information from being
+           * leaked to the client. The data passed to the client is the same
+           * as if you were to fetch `/api/uploadthing` directly.
+           */
+          routerConfig={extractRouterConfig(ourFileRouter)}
+        />
+        <html lang="en">
+          <body className={`font-sans ${inter.variable} dark`}>
+            <div className="grid h-screen grid-rows-[auto,1fr]">
+              <TopNav />
+              <main className="overflow-y-scroll">{children}</main>
+              {modal}
+            </div>
+            <div id='modal-root' />
+            <Toaster />
+          </body>
+        </html>
+      </CSPostHogProvider>
     </ClerkProvider>
   );
 }
